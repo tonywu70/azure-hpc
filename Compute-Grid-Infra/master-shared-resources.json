@@ -19,6 +19,8 @@
     "location": "[resourceGroup().location]",
     "networkApiVersion": "2016-03-30",
     "storageApiVersion": "2015-06-15"
+    "vnetID": "[resourceId(parameters('networkSettings').vnetRG, 'Microsoft.Network/virtualNetworks', parameters('networkSettings').virtualNetworkName)]",
+    "infraSubnetRef": "[concat(variables('vnetID'),'/subnets/', parameters('networkSettings').infraSubnet)]"
   },
   "resources": [
     {
@@ -51,6 +53,8 @@
         "[concat('Microsoft.Network/publicIPAddresses/', parameters('masterSettings').publicIPAddressName)]"
       ],
       "properties": {
+        "primary": true,
+        "enableAcceleratedNetworking": true,
         "ipConfigurations": [
           {
             "name": "[parameters('masterSettings').IPConfigName]",
@@ -60,7 +64,7 @@
                 "id": "[resourceId('Microsoft.Network/publicIPAddresses',parameters('masterSettings').publicIPAddressName)]"
               },
               "subnet": {
-                "id": "[parameters('networkSettings').infraSubnetRef]"
+                  "id": "[variables('infraSubnetRef')]"
               }
             }
           }
