@@ -14,44 +14,4 @@
     "storageApiVersion": "2015-06-15"
   },
   "resources": [
-    {
-      "type": "Microsoft.Network/virtualNetworks",
-      "name": "[parameters('networkSettings').virtualNetworkName]",
-      "location": "[resourceGroup().location]",
-      "apiVersion": "[variables('networkApiVersion')]",
-      "properties": {
-        "addressSpace": {
-          "addressPrefixes": [
-            "[parameters('networkSettings').addressPrefix]"
-          ]
-        },
-        "subnets": [
-          {
-            "name": "computeSubnet",
-            "properties": {
-              "addressPrefix": "[parameters('networkSettings').computeSubnetPrefix]"
-            }
-          },
-          {
-            "name": "storageSubnet",
-            "properties": {
-              "addressPrefix": "[parameters('networkSettings').storageSubnetPrefix]"
-            }
-          },
-          {
-            "name": "infraSubnet",
-            "properties": {
-              "addressPrefix": "[parameters('networkSettings').infraSubnetPrefix]"
-            }
-          },
-          {
-            "name": "GatewaySubnet",
-            "properties": {
-              "addressPrefix": "[parameters('networkSettings').gatewaySubnetPrefix]"
-            }
-          }
-        ]
-      }
-    }
-  ]
-}
+  ]  
