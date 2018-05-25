@@ -111,6 +111,42 @@
         "description": "password for the Virtual Machine."
       }
     },
+    "vnetName": {
+      "type": "string",
+      "metadata": {
+        "description": "vnet name for the master head node as a string."
+      } 
+    }, 
+    "computesubnet": {
+      "type": "string",
+      "metadata": {
+        "description": "compute subnet name for the compute nodes as a string."
+      } 
+    }, 
+    "storagesubnet": {
+      "type": "string",
+      "metadata": {
+        "description": "storage subnet name for the beegfs nodes as a string."
+      } 
+    }, 
+    "infrasubnet": {
+      "type": "string",
+      "metadata": {
+        "description": "infra subnet name for infra nodes as a string."
+      } 
+    }, 
+    "gatewaysubnet": {
+      "type": "string",
+      "metadata": {
+        "description": "gateway subnet for gateway node node as a string."
+      } 
+    }, 
+    "RGname" : {
+      "type": "string",
+      "metadata": {
+        "descrtiption": "Resource group name as a string."
+      }
+    },
     "sshKeyData": {
       "type": "string",
       "metadata": {
@@ -123,16 +159,15 @@
     "namingInfix": "[toLower(substring(concat(parameters('vmPrefix'), uniqueString(resourceGroup().id)), 0, 9))]",
     "longNamingInfix": "[toLower(parameters('vmPrefix'))]",
     "newStorageAccountSuffix": "[concat(variables('longNamingInfix'), 'sa')]",
-    "virtualNetworkName": "grid-vnet",
+    "virtualNetworkName": "[parameters('vnetName')]",
     "vnetID": "[resourceId('Microsoft.Network/virtualNetworks', variables('virtualNetworkName'))]",
     "networkSettings": {
       "virtualNetworkName": "[variables('virtualNetworkName')]",
-      "addressPrefix": "10.0.0.0/20",
-      "computeSubnetPrefix": "10.0.0.0/21",
-      "storageSubnetPrefix": "10.0.10.0/25",
-      "infraSubnetPrefix": "10.0.8.0/28",
-      "gatewaySubnetPrefix": "10.0.9.0/29",
-      "infraSubnetRef": "[concat(variables('vnetID'),'/subnets/infraSubnet/')]",
+      "computeSubnet": "[parameters('computesubnet')]",
+      "storageSubnet": "[parameters('storagesubnet')]",
+      "infraSubnet": "[parameters('infrasubnet')]",
+      "gatewaySubnet": "[parameters('gatewaysubnet')]",
+      "vnetRG": "[parameters('RGname')]",
       "nsgName": "nsg-master"
     },
     "masterBoxName": "[concat(variables('longNamingInfix'), 'master')]",
